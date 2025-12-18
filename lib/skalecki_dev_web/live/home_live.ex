@@ -1,12 +1,14 @@
 defmodule SkaleckiDevWeb.HomeLive do
   use SkaleckiDevWeb, :live_view
 
+  alias SkaleckiDev.Blog
+
   @impl true
   def mount(_params, _session, socket) do
     {:ok,
      socket
      |> assign(:page_title, nil)
-     |> assign(:posts, fake_posts())
+     |> assign(:posts, Blog.recent_posts(3))
      |> assign(:projects, projects())}
   end
 
@@ -52,11 +54,11 @@ defmodule SkaleckiDevWeb.HomeLive do
 
   defp hero_section(assigns) do
     ~H"""
-    <section class="min-h-screen flex flex-col justify-center pt-24 px-6 max-w-6xl mx-auto relative overflow-hidden">
-      <div class="absolute top-1/3 right-[-10%] w-[600px] h-[600px] bg-primary rounded-full blur-[120px] -z-10 opacity-10 pointer-events-none">
+    <section class="min-h-screen flex flex-col justify-center pt-24 relative overflow-hidden">
+      <div class="absolute top-1/3 right-0 w-[600px] h-[600px] bg-primary rounded-full blur-[120px] -z-10 opacity-10 pointer-events-none">
       </div>
 
-      <div class="animate-fade-in space-y-10">
+      <div class="animate-fade-in space-y-10 px-6 max-w-6xl mx-auto w-full">
         <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
           <div class="relative group">
             <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-warning rounded-full opacity-75 blur group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
@@ -118,7 +120,7 @@ defmodule SkaleckiDevWeb.HomeLive do
 
       <a
         href="#projects"
-        class="absolute bottom-12 left-6 text-secondary/50 hover:text-primary transition-colors animate-bounce"
+        class="absolute bottom-12 left-1/2 -translate-x-1/2 text-secondary/50 hover:text-primary transition-colors animate-bounce"
       >
         <.icon name="hero-arrow-down" class="size-6" />
       </a>
@@ -224,7 +226,12 @@ defmodule SkaleckiDevWeb.HomeLive do
     <section id="thoughts" class="py-24 px-6 max-w-6xl mx-auto">
       <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-base-content/10 pb-8">
         <h2 class="font-serif text-5xl text-base-content">Thoughts</h2>
-        <p class="font-mono text-sm text-secondary pt-4 md:pt-0">Engineering journal</p>
+        <.link
+          navigate={~p"/blog"}
+          class="font-mono text-sm text-secondary hover:text-primary transition-colors pt-4 md:pt-0 flex items-center gap-2"
+        >
+          View all <.icon name="hero-arrow-right" class="size-3" />
+        </.link>
       </div>
 
       <div class="flex flex-col">
@@ -238,8 +245,11 @@ defmodule SkaleckiDevWeb.HomeLive do
 
   defp post_card(assigns) do
     ~H"""
-    <article class="group py-12 border-b border-base-content/5 hover:bg-base-content/[0.02] transition-colors cursor-pointer">
-      <div class="flex flex-col md:flex-row gap-8 justify-between">
+    <.link
+      navigate={~p"/blog/#{@post.slug}"}
+      class="group py-12 border-b border-base-content/5 hover:bg-base-content/[0.02] transition-colors block"
+    >
+      <article class="flex flex-col md:flex-row gap-8 justify-between">
         <div class="md:w-1/4">
           <time class="font-mono text-sm text-primary/80 block mb-2">
             {Calendar.strftime(@post.date, "%b %d, %Y")}
@@ -261,8 +271,8 @@ defmodule SkaleckiDevWeb.HomeLive do
             />
           </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </.link>
     """
   end
 
@@ -385,35 +395,6 @@ defmodule SkaleckiDevWeb.HomeLive do
         tags: ["Elixir", "Vue.js", "Phoenix", "LiveView"],
         url: "https://github.com/Valian/live_vue",
         icon: nil
-      }
-    ]
-  end
-
-  defp fake_posts do
-    [
-      %{
-        title: "Why I Switched to Elixir After 10 Years of C++",
-        slug: "switched-to-elixir",
-        date: ~D[2024-10-12],
-        reading_time: "8 min",
-        description:
-          "The cognitive load of manual memory management vs the freedom of the actor model. A deep dive into developer happiness and system resiliency."
-      },
-      %{
-        title: "Pragmatic AI: When to use RAG vs Fine-tuning",
-        slug: "rag-vs-finetuning",
-        date: ~D[2024-09-28],
-        reading_time: "12 min",
-        description:
-          "Lessons learned from building 3 production AI assistants. Why context windows are often enough, and when you actually need to train weights."
-      },
-      %{
-        title: "The Art of Pushing Back",
-        slug: "art-of-pushing-back",
-        date: ~D[2024-08-15],
-        reading_time: "5 min",
-        description:
-          "Why saying \"no\" to a feature request is often the most senior engineering decision you can make. Balancing technical debt with business velocity."
       }
     ]
   end

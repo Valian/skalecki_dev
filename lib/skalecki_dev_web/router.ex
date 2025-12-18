@@ -18,6 +18,8 @@ defmodule SkaleckiDevWeb.Router do
     pipe_through :browser
 
     live "/", HomeLive
+    live "/blog", BlogLive
+    live "/blog/:slug", BlogLive.Show
   end
 
   # Other scopes may use custom stacks.
