@@ -13,12 +13,12 @@
 /* daisyUI Tailwind Plugin. You can update this file by fetching the latest version with:
    curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui.js
    Make sure to look at the daisyUI changelog: https://daisyui.com/docs/changelog/ */
-@plugin "../vendor/daisyui" {
+@plugin "daisyui" {
   themes: false;
 }
 
 /* daisyUI theme plugin - Dark theme inspired by skalecki.dev design */
-@plugin "../vendor/daisyui-theme" {
+@plugin "daisyui/theme" {
   name: "dark";
   default: false;
   prefersdark: true;
@@ -54,7 +54,7 @@
 }
 
 /* daisyUI theme plugin - Light theme with orange primary */
-@plugin "../vendor/daisyui-theme" {
+@plugin "daisyui/theme" {
   name: "light";
   default: true;
   prefersdark: false;
