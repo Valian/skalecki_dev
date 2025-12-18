@@ -36,8 +36,10 @@ defmodule SkaleckiDev.DataCase do
   Sets up the sandbox based on the test tags.
   """
   def setup_sandbox(tags) do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(SkaleckiDev.Repo, shared: not tags[:async])
-    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
+    if Application.get_env(:skalecki_dev, :start_ecto, false) do
+      pid = Ecto.Adapters.SQL.Sandbox.start_owner!(SkaleckiDev.Repo, shared: not tags[:async])
+      on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
+    end
   end
 
   @doc """

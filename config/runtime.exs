@@ -21,16 +21,14 @@ if System.get_env("PHX_SERVER") do
 end
 
 if config_env() == :prod do
-  database_path =
-    System.get_env("DATABASE_PATH") ||
-      raise """
-      environment variable DATABASE_PATH is missing.
-      For example: /etc/skalecki_dev/skalecki_dev.db
-      """
+  # Optional database configuration - only set if DATABASE_PATH is provided
+  if database_path = System.get_env("DATABASE_PATH") do
+    config :skalecki_dev, :start_ecto, true
 
-  config :skalecki_dev, SkaleckiDev.Repo,
-    database: database_path,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
+    config :skalecki_dev, SkaleckiDev.Repo,
+      database: database_path,
+      pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
+  end
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
@@ -44,13 +42,19 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
+  host = System.get_env("PHX_HOST") || "skalecki.dev"
   port = String.to_integer(System.get_env("PORT") || "4000")
+  scheme = System.get_env("PHX_SCHEME") || "https"
+
+  url_port =
+    String.to_integer(
+      System.get_env("PHX_URL_PORT") || if(scheme == "https", do: "443", else: to_string(port))
+    )
 
   config :skalecki_dev, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :skalecki_dev, SkaleckiDevWeb.Endpoint,
-    url: [host: host, port: 443, scheme: "https"],
+    url: [host: host, port: url_port, scheme: scheme],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
