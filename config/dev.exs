@@ -21,10 +21,8 @@ config :skalecki_dev, SkaleckiDevWeb.Endpoint,
   code_reloader: true,
   debug_errors: true,
   secret_key_base: "BIT45A28VM36iChN+CkJRHBtxQX3r2ooqllbUj+nI9AtlbmRbDkv+usFhVYx0laa",
-  watchers: [
-    esbuild: {Esbuild, :install_and_run, [:skalecki_dev, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:skalecki_dev, ~w(--watch)]}
-  ]
+  watchers: [vite: {PhoenixVite.Npm, :run, [:vite, ~w(dev)]}],
+  static_url: [host: "localhost", port: 5173]
 
 # ## SSL Support
 #
@@ -54,7 +52,6 @@ config :skalecki_dev, SkaleckiDevWeb.Endpoint,
   live_reload: [
     web_console_logger: true,
     patterns: [
-      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/skalecki_dev_web/(?:controllers|live|components|router)/?.*\.(ex|heex)$"
     ]
