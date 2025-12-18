@@ -2,6 +2,41 @@ This is a web application written using the Phoenix web framework.
 
 ## Project guidelines
 
+### Responsive images with PhoenixSrcset
+
+This project includes a small internal library (`lib/phoenix_srcset/`) for generating responsive image variants.
+
+**Generate variants for images:**
+
+```bash
+# Single image
+mix phoenix_srcset.generate assets/public/images/photo.png
+
+# All images in directory
+mix phoenix_srcset.generate assets/public/images/
+
+# Custom widths
+mix phoenix_srcset.generate assets/public/images/ --widths=320,640,960
+
+# Force regenerate existing
+mix phoenix_srcset.generate assets/public/images/ --force
+```
+
+**Use in templates:**
+
+```heex
+<PhoenixSrcset.Components.responsive_img
+  src="/images/photo.png"
+  alt="Description"
+  sizes="(max-width: 640px) 100vw, 800px"
+  class="rounded-lg"
+/>
+```
+
+The component generates `<img>` tags with proper `srcset` pointing to WebP variants at 400w, 800w, 1200w, 1600w.
+
+Import the component in `skalecki_dev_web.ex` `html_helpers` if you want it available everywhere, or alias locally.
+
 - Use `mix precommit` alias when you are done with all changes and fix any pending issues
 - Use the already included and available `:req` (`Req`) library for HTTP requests, **avoid** `:httpoison`, `:tesla`, and `:httpc`. Req is included by default and is the preferred HTTP client for Phoenix apps
 ### Phoenix v1.8 guidelines

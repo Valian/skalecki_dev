@@ -14,6 +14,10 @@ defmodule SkaleckiDevWeb.PageController do
   def blog_index(conn, _params) do
     conn
     |> assign(:page_title, "Thoughts")
+    |> assign(
+      :meta_description,
+      "Engineering journal by Jakub Skałecki. Notes on building software, working with AI, and navigating the craft."
+    )
     |> assign(:posts, Blog.all_posts())
     |> render(:blog_index)
   end
@@ -25,6 +29,8 @@ defmodule SkaleckiDevWeb.PageController do
 
     conn
     |> assign(:page_title, post.title)
+    |> assign(:meta_description, post.description)
+    |> assign(:meta_type, "article")
     |> assign(:post, post)
     |> assign(:prev_post, prev_post)
     |> assign(:next_post, next_post)
@@ -50,17 +56,17 @@ defmodule SkaleckiDevWeb.PageController do
           "LinkedIn AI assistant for crafting engaging posts and growing your professional presence.",
         tags: ["AI", "LinkedIn", "Content Generation"],
         url: "https://postline.ai",
-        icon: nil
+        image: "/images/postline_screenshot.png"
       },
       %{
-        name: "researchmate.ai",
+        name: "Mind Nexus",
         type: :professional,
-        year: "2024",
+        year: "2023",
         description:
-          "Deep research tool - automated comprehensive research before it was trendy.",
-        tags: ["AI", "Research", "RAG"],
-        url: "https://researchmate.ai",
-        icon: nil
+          "AI-focused software company I co-founded, dedicated to transforming professional workflows. Based in Hamburg, Germany.",
+        tags: ["AI", "SaaS", "Startup"],
+        url: "https://mindnexus.dev",
+        image: "/images/mindnexus_screenshot.png"
       },
       %{
         name: "LiveVue",
@@ -70,7 +76,7 @@ defmodule SkaleckiDevWeb.PageController do
           "Bridge between Phoenix LiveView and Vue.js - best of both worlds for interactive UIs.",
         tags: ["Elixir", "Vue.js", "Phoenix", "LiveView"],
         url: "https://github.com/Valian/live_vue",
-        icon: nil
+        image: "/images/live_vue_screenshot.png"
       }
     ]
   end

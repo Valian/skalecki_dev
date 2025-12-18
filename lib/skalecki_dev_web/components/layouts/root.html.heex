@@ -4,14 +4,42 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <meta
-      name="description"
-      content="Jakub Skałecki - Software Engineer specializing in Elixir, AI, and high-impact engineering. Building tools that matter."
-    />
+    <meta name="description" content={@meta_description} />
     <meta name="author" content="Jakub Skałecki" />
     <.live_title default="Jakub Skałecki" suffix=" | skalecki.dev">
       {assigns[:page_title]}
     </.live_title>
+    <%!-- Canonical URL --%>
+    <link rel="canonical" href={unverified_url(@conn, @conn.request_path)} />
+    <%!-- Open Graph --%>
+    <meta property="og:type" content={@meta_type} />
+    <meta property="og:url" content={unverified_url(@conn, @conn.request_path)} />
+    <meta
+      property="og:title"
+      content={
+        if assigns[:page_title],
+          do: "#{assigns[:page_title]} | skalecki.dev",
+          else: "Jakub Skałecki | skalecki.dev"
+      }
+    />
+    <meta property="og:description" content={@meta_description} />
+    <meta property="og:image" content={static_url(@conn, @meta_image)} />
+    <meta property="og:site_name" content="skalecki.dev" />
+    <meta property="og:locale" content="en_US" />
+    <%!-- Twitter Card --%>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@jskalc" />
+    <meta name="twitter:creator" content="@jskalc" />
+    <meta
+      name="twitter:title"
+      content={
+        if assigns[:page_title],
+          do: "#{assigns[:page_title]} | skalecki.dev",
+          else: "Jakub Skałecki | skalecki.dev"
+      }
+    />
+    <meta name="twitter:description" content={@meta_description} />
+    <meta name="twitter:image" content={static_url(@conn, @meta_image)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <PhoenixVite.Components.assets

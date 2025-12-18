@@ -47,6 +47,12 @@ config :logger, :default_formatter,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# PhoenixSrcset responsive image generation
+config :phoenix_srcset,
+  widths: [400, 800, 1200, 1600],
+  format: "webp",
+  quality: 85
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

@@ -68,7 +68,8 @@ defmodule SkaleckiDev.MixProject do
       {:nimble_publisher, "~> 1.1"},
       {:makeup, ">= 0.0.0"},
       {:makeup_elixir, ">= 0.0.0"},
-      {:makeup_erlang, ">= 0.0.0"}
+      {:makeup_erlang, ">= 0.0.0"},
+      {:phoenix_srcset, "~> 0.1"}
     ]
   end
 
