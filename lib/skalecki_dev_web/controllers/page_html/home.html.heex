@@ -1,27 +1,6 @@
 <div class="grain"></div>
 
-<nav
-  id="navbar"
-  class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 py-6 bg-transparent"
->
-  <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
-    <a
-      href="#"
-      class="font-mono text-sm tracking-widest uppercase font-bold text-primary hover:text-base-content transition-colors"
-    >
-      skalecki<span class="text-base-content">.dev</span>
-    </a>
-
-    <div class="flex gap-6 items-center">
-      <div class="hidden sm:flex gap-8 text-sm font-mono text-secondary">
-        <a href="#projects" class="hover:text-base-content transition-colors">Work</a>
-        <a href="#thoughts" class="hover:text-base-content transition-colors">Thoughts</a>
-        <a href="#contact" class="hover:text-base-content transition-colors">Contact</a>
-      </div>
-      <Layouts.theme_toggle />
-    </div>
-  </div>
-</nav>
+<Layouts.site_header />
 
 <main class="font-sans">
   <section class="min-h-screen flex flex-col justify-center pt-24 relative overflow-hidden">
@@ -35,8 +14,8 @@
           </div>
           <img
             src="https://github.com/Valian.png"
-            alt="Jakub Skalecki"
-            class="relative w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-base-200 object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            alt="Jakub Skałecki"
+            class="relative w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-base-200 object-cover transition-all duration-500"
           />
         </div>
 
@@ -46,26 +25,23 @@
             </span>
             <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
           </span>
-          Building tools that matter
+          Founder @ Postline.ai
         </div>
       </div>
 
       <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-base-content">
-        Impact over<br />
-        <span class="italic text-secondary/70">boilerplate.</span>
+        Building things and<br />
+        <span class="italic text-secondary/70">sharing what I learn.</span>
       </h1>
 
       <div class="max-w-2xl animate-slide-up" style="animation-delay: 0.2s">
         <p class="font-sans text-lg md:text-xl text-secondary leading-relaxed border-l-2 border-primary/50 pl-6 mb-6">
-          I'm <strong class="text-base-content">Jakub Skalecki</strong>
-          (Valian). I specialize in high-leverage engineering for ambitious companies.
+          I'm <strong class="text-base-content">Jakub Skałecki</strong>.
+          I run a bootstrapped SaaS, contribute to open source, and write about whatever
+          I'm currently obsessed with — lately that's Elixir, Phoenix, and AI-assisted development.
         </p>
         <p class="font-sans text-base md:text-lg text-secondary/80 leading-relaxed pl-6">
-          I don't just write code; I challenge requirements to ensure we build what actually matters.
-          Goal-oriented and direct, I bridge the gap between technical complexity and business value.
-          <br /><br /> Currently deep-diving into
-          <span class="text-primary">Applied AI Engineering</span>
-          and Elixir ecosystems.
+          Happy to help you with your next project.
         </p>
       </div>
 
@@ -75,15 +51,15 @@
       >
         <div class="flex items-center gap-3 text-secondary">
           <.icon name="hero-cpu-chip" class="text-primary size-4" />
-          <span>AI Engineering</span>
+          <span>AI & LLMs</span>
         </div>
         <div class="flex items-center gap-3 text-secondary">
           <.icon name="hero-bolt" class="text-primary size-4" />
           <span>Elixir & Phoenix</span>
         </div>
         <div class="flex items-center gap-3 text-secondary">
-          <.icon name="hero-rocket-launch" class="text-primary size-4" />
-          <span>Product Strategy</span>
+          <.icon name="hero-code-bracket" class="text-primary size-4" />
+          <span>Open Source</span>
         </div>
       </div>
     </div>
@@ -121,7 +97,7 @@
   <section id="projects" class="py-32 px-6 max-w-6xl mx-auto">
     <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-base-content/10 pb-8">
       <h2 class="font-serif text-5xl text-base-content">Selected Works</h2>
-      <p class="font-mono text-sm text-secondary pt-4 md:pt-0">Solving real problems</p>
+      <p class="font-mono text-sm text-secondary pt-4 md:pt-0">and there's more</p>
     </div>
 
     <div class="flex flex-col gap-24">
@@ -241,7 +217,7 @@
           Let's<br />Connect.
         </h2>
         <p class="font-sans text-xl text-secondary max-w-md">
-          Always open to discussing functional architecture, Elixir adoption, AI engineering, or interesting collaborations.
+          Happy to chat about Elixir, AI, bootstrapping, or interesting project ideas.
         </p>
       </div>
 
@@ -298,7 +274,7 @@
     </div>
 
     <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-base-content/5 font-mono text-xs text-secondary/40">
-      <p>&copy; {Date.utc_today().year} Jakub Skalecki (Valian). All rights reserved.</p>
+      <p>&copy; {Date.utc_today().year} Jakub Skałecki (Valian). All rights reserved.</p>
       <p>Built with Phoenix & Tailwind.</p>
     </div>
   </div>

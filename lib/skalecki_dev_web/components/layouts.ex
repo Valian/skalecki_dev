@@ -12,6 +12,66 @@ defmodule SkaleckiDevWeb.Layouts do
   embed_templates "layouts/*"
 
   @doc """
+  Renders the site header/navigation bar.
+
+  ## Examples
+
+      <Layouts.site_header />
+      <Layouts.site_header active={:thoughts} />
+  """
+  attr :active, :atom,
+    default: nil,
+    doc: "the currently active nav item (:work, :thoughts, :contact)"
+
+  def site_header(assigns) do
+    ~H"""
+    <nav class="fixed top-0 left-0 right-0 z-40 py-6 bg-base-100/80 backdrop-blur-sm border-b border-base-content/5">
+      <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+        <a
+          href="/"
+          class="font-mono text-sm tracking-widest uppercase font-bold text-primary hover:text-base-content transition-colors"
+        >
+          skalecki<span class="text-base-content">.dev</span>
+        </a>
+
+        <div class="flex gap-6 items-center">
+          <div class="hidden sm:flex gap-8 text-sm font-mono text-secondary">
+            <a
+              href="/#projects"
+              class={[
+                "hover:text-base-content transition-colors",
+                @active == :work && "text-primary"
+              ]}
+            >
+              Work
+            </a>
+            <a
+              href="/blog"
+              class={[
+                "hover:text-base-content transition-colors",
+                @active == :thoughts && "text-primary"
+              ]}
+            >
+              Thoughts
+            </a>
+            <a
+              href="/#contact"
+              class={[
+                "hover:text-base-content transition-colors",
+                @active == :contact && "text-primary"
+              ]}
+            >
+              Contact
+            </a>
+          </div>
+          <.theme_toggle />
+        </div>
+      </div>
+    </nav>
+    """
+  end
+
+  @doc """
   Renders your app layout.
 
   This function is typically invoked from every template,
