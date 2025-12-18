@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title default="SkaleckiDev" suffix=" · Phoenix Framework">
+    <meta
+      name="description"
+      content="Jakub Skalecki - Software Engineer specializing in Elixir, AI, and high-impact engineering. Building tools that matter."
+    />
+    <meta name="author" content="Jakub Skalecki" />
+    <.live_title default="Jakub Skalecki" suffix=" | skalecki.dev">
       {assigns[:page_title]}
     </.live_title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>

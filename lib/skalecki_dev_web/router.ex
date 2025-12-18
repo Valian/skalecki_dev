@@ -17,7 +17,7 @@ defmodule SkaleckiDevWeb.Router do
   scope "/", SkaleckiDevWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive
   end
 
   # Other scopes may use custom stacks.
