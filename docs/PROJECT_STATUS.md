@@ -2,7 +2,7 @@
 
 ## Overview
 
-Personal website for Jakub Skalecki (GitHub: Valian) built with Phoenix LiveView.
+Personal website for Jakub Skałecki (GitHub: Valian) built with Phoenix LiveView.
 
 **Domain:** skalecki.dev
 **Email:** jakub@skalecki.dev

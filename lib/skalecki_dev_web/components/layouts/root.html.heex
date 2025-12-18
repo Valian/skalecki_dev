@@ -6,10 +6,10 @@
     <meta name="csrf-token" content={get_csrf_token()} />
     <meta
       name="description"
-      content="Jakub Skalecki - Software Engineer specializing in Elixir, AI, and high-impact engineering. Building tools that matter."
+      content="Jakub Skałecki - Software Engineer specializing in Elixir, AI, and high-impact engineering. Building tools that matter."
     />
-    <meta name="author" content="Jakub Skalecki" />
-    <.live_title default="Jakub Skalecki" suffix=" | skalecki.dev">
+    <meta name="author" content="Jakub Skałecki" />
+    <.live_title default="Jakub Skałecki" suffix=" | skalecki.dev">
       {assigns[:page_title]}
     </.live_title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,7 +35,7 @@
           setTheme(localStorage.getItem("phx:theme") || "system");
         }
         window.addEventListener("storage", (e) => e.key === "phx:theme" && setTheme(e.newValue || "system"));
-        
+
         window.addEventListener("phx:set-theme", (e) => setTheme(e.target.dataset.phxTheme));
       })();
     </script>

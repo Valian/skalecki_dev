@@ -1,24 +1,6 @@
 <div class="grain"></div>
 
-<nav class="fixed top-0 left-0 right-0 z-40 py-6 bg-base-100/80 backdrop-blur-sm border-b border-base-content/5">
-  <div class="max-w-4xl mx-auto px-6 flex justify-between items-center">
-    <a
-      href="/"
-      class="font-mono text-sm tracking-widest uppercase font-bold text-primary hover:text-base-content transition-colors"
-    >
-      skalecki<span class="text-base-content">.dev</span>
-    </a>
-
-    <div class="flex gap-6 items-center">
-      <div class="hidden sm:flex gap-8 text-sm font-mono text-secondary">
-        <a href="/#projects" class="hover:text-base-content transition-colors">Work</a>
-        <a href="/blog" class="text-primary">Thoughts</a>
-        <a href="/#contact" class="hover:text-base-content transition-colors">Contact</a>
-      </div>
-      <Layouts.theme_toggle />
-    </div>
-  </div>
-</nav>
+<Layouts.site_header active={:thoughts} />
 
 <main class="font-sans pt-32 pb-24 px-6 max-w-4xl mx-auto min-h-screen">
   <header class="mb-16 animate-fade-in">
@@ -70,7 +52,7 @@
 
 <footer class="bg-base-200 py-12 px-6 border-t border-base-content/5">
   <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-xs text-secondary/40">
-    <p>&copy; {Date.utc_today().year} Jakub Skalecki (Valian). All rights reserved.</p>
+    <p>&copy; {Date.utc_today().year} Jakub Skałecki (Valian). All rights reserved.</p>
     <a href="/" class="hover:text-primary transition-colors">Back to Home</a>
   </div>
 </footer>

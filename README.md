@@ -1,6 +1,6 @@
 # skalecki.dev
 
-Personal website and blog for Jakub Skałecki, a developer with over 12 years of experience in various technologies.
+Personal website and blog for Jakub Skałecki. Building things and sharing what I learn — bootstrapped SaaS, open source, Elixir, Phoenix, and AI-assisted development.
 
 ## Tech Stack
 
