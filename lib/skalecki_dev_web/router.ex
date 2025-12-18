@@ -8,6 +8,7 @@ defmodule SkaleckiDevWeb.Router do
     plug :put_root_layout, html: {SkaleckiDevWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug SkaleckiDevWeb.Plugs.SEO
   end
 
   pipeline :api do
@@ -20,6 +21,7 @@ defmodule SkaleckiDevWeb.Router do
     get "/", PageController, :home
     get "/blog", PageController, :blog_index
     get "/blog/:slug", PageController, :blog_show
+    get "/sitemap.xml", SitemapController, :index
   end
 
   # Other scopes may use custom stacks.

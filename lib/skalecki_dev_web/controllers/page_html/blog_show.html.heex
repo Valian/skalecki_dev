@@ -1,5 +1,29 @@
 <div class="grain"></div>
 
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": <%= Jason.encode!(@post.title) %>,
+    "description": <%= Jason.encode!(@post.description) %>,
+    "datePublished": "<%= Date.to_iso8601(@post.date) %>",
+    "author": {
+      "@type": "Person",
+      "name": "Jakub Skałecki",
+      "url": "https://skalecki.dev"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Jakub Skałecki",
+      "url": "https://skalecki.dev"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "<%= url(@conn, ~p"/blog/#{@post.slug}") %>"
+    }
+  }
+</script>
+
 <Layouts.site_header active={:thoughts} />
 
 <main class="font-sans pt-32 pb-24 px-6 max-w-3xl mx-auto min-h-screen">
