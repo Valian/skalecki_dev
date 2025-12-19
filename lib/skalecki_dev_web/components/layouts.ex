@@ -25,7 +25,7 @@ defmodule SkaleckiDevWeb.Layouts do
 
   def site_header(assigns) do
     ~H"""
-    <nav class="fixed top-0 left-0 right-0 z-40 py-6 bg-base-100/80 backdrop-blur-sm border-b border-base-content/5">
+    <nav class="fixed top-0 left-0 right-0 z-[70] py-6 bg-base-100/80 backdrop-blur-sm border-b border-base-content/5">
       <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
         <a
           href="/"
