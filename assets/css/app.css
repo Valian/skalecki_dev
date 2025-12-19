@@ -293,6 +293,11 @@
   color: var(--color-primary);
 }
 
+/* Inline code in dark mode needs more contrast */
+[data-theme="dark"] .prose code {
+  background: oklch(15% 0.01 250);
+}
+
 .prose pre {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 0.875rem;
@@ -301,8 +306,13 @@
   border-radius: 0.5rem;
   overflow-x: auto;
   margin: 1.5rem 0;
-  border: 1px solid var(--color-base-content);
-  border-opacity: 0.05;
+  border: 1px solid oklch(from var(--color-base-content) l c h / 0.1);
+}
+
+/* Code blocks in dark mode need more contrast */
+[data-theme="dark"] .prose pre {
+  background: oklch(15% 0.01 250);
+  border-color: oklch(25% 0.02 250);
 }
 
 .prose pre code {
