@@ -1,4 +1,14 @@
 import "vite/modulepreload-polyfill";
+import posthog from 'posthog-js'
+
+// PostHog cookieless analytics
+posthog.init('phc_re6bQw5TIQAXO2zOpd4CBogXDFNitraV2sJg8orAIMI', {
+  api_host: 'https://eu.i.posthog.com',
+  person_profiles: 'identified_only',
+  cookieless_mode: 'always',
+  defaults: '2025-11-30',
+})
+
 // If you want to use Phoenix channels, run `mix help phx.gen.channel`
 // to get started and then uncomment the line below.
 // import "./user_socket.js"
