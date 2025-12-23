@@ -1,6 +1,6 @@
 defmodule SkaleckiDev.Blog.Post do
   @enforce_keys [:id, :slug, :title, :description, :body, :date, :reading_time]
-  defstruct [:id, :slug, :title, :description, :body, :date, :reading_time, :tags]
+  defstruct [:id, :slug, :title, :description, :body, :date, :reading_time, :tags, hidden: false]
 
   def build(filename, attrs, body) do
     [year, month, day, slug] = parse_filename(filename)
@@ -15,7 +15,8 @@ defmodule SkaleckiDev.Blog.Post do
         date: date,
         body: body,
         reading_time: reading_time,
-        tags: Map.get(attrs, :tags, [])
+        tags: Map.get(attrs, :tags, []),
+        hidden: Map.get(attrs, :hidden, false)
       ] ++ Map.to_list(attrs)
     )
   end

@@ -8,11 +8,12 @@ defmodule SkaleckiDev.Blog do
     highlighters: []
 
   @posts Enum.sort_by(@posts, & &1.date, {:desc, Date})
+  @visible_posts Enum.reject(@posts, & &1.hidden)
 
-  def all_posts, do: @posts
+  def all_posts, do: @visible_posts
 
   def recent_posts(count \\ 3) do
-    @posts |> Enum.take(count)
+    @visible_posts |> Enum.take(count)
   end
 
   def get_post_by_slug!(slug) do
@@ -21,14 +22,14 @@ defmodule SkaleckiDev.Blog do
   end
 
   def all_tags do
-    @posts
+    @visible_posts
     |> Enum.flat_map(& &1.tags)
     |> Enum.uniq()
     |> Enum.sort()
   end
 
   def posts_by_tag(tag) do
-    Enum.filter(@posts, &(tag in &1.tags))
+    Enum.filter(@visible_posts, &(tag in &1.tags))
   end
 end
 
