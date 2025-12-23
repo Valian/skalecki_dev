@@ -35,3 +35,11 @@ npm-debug.log
 # Database files
 *.db
 *.db-*
+
+# Root-level npm files (assets are in /assets)
+/node_modules/
+/package.json
+/package-lock.json
+
+# Transcripts
+/priv/transcripts/
