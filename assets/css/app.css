@@ -9,6 +9,7 @@
 /* A Tailwind plugin that makes "hero-#{ICON}" classes available.
    The heroicons installation itself is managed by your mix.exs */
 @plugin "../vendor/heroicons";
+@plugin "@tailwindcss/typography";
 
 /* daisyUI Tailwind Plugin. You can update this file by fetching the latest version with:
    curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui.js
@@ -203,43 +204,6 @@
 }
 
 /* Prose styles for blog posts */
-.prose {
-  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  color: var(--color-base-content);
-  line-height: 1.8;
-}
-
-.prose h2 {
-  font-family: 'Playfair Display', ui-serif, Georgia, serif;
-  font-size: 1.75rem;
-  font-weight: 600;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  color: var(--color-base-content);
-}
-
-.prose h3 {
-  font-family: 'Playfair Display', ui-serif, Georgia, serif;
-  font-size: 1.375rem;
-  font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
-  color: var(--color-base-content);
-}
-
-.prose p {
-  margin-bottom: 1.5rem;
-  color: var(--color-secondary);
-}
-
-.prose strong {
-  color: var(--color-base-content);
-  font-weight: 600;
-}
-
-.prose em {
-  font-style: italic;
-}
 
 .prose a {
   color: var(--color-primary);
@@ -259,7 +223,7 @@
 
 .prose li {
   margin-bottom: 0.5rem;
-  color: var(--color-secondary);
+  color: oklch(from var(--color-base-content) l c h / 0.85);
 }
 
 .prose ul li::marker {
@@ -277,7 +241,7 @@
   padding-left: 1.5rem;
   margin: 2rem 0;
   font-style: italic;
-  color: var(--color-secondary);
+  color: oklch(from var(--color-base-content) l c h / 0.75);
 }
 
 .prose blockquote p {
@@ -301,7 +265,8 @@
 .prose pre {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 0.875rem;
-  background: var(--color-base-200);
+  /* Always use dark background for code blocks, matching Dracula theme */
+  background: oklch(18% 0 0);
   padding: 1.25rem;
   border-radius: 0.5rem;
   overflow-x: auto;
@@ -318,7 +283,9 @@
 .prose pre code {
   background: none;
   padding: 0;
-  color: var(--color-base-content);
+  /* Always use light text for code, matching Dracula theme */
+  color: #f8f8f2;
+  font-size: inherit;
 }
 
 .prose hr {
@@ -333,49 +300,43 @@
   margin: 2rem 0;
 }
 
-/* Makeup syntax highlighting - Light theme */
-.makeup .k,
-.makeup .kd,
-.makeup .kn,
-.makeup .kp { color: oklch(50% 0.2 50); font-weight: 500; } /* keywords - orange */
-.makeup .nc { color: oklch(45% 0.15 290); } /* module names - purple */
-.makeup .nf { color: oklch(45% 0.12 250); } /* function names - blue */
-.makeup .na { color: oklch(50% 0.15 290); } /* attributes (@impl) - purple */
-.makeup .no { color: oklch(50% 0.2 50); } /* constants (true/false) - orange */
-.makeup .bp { color: oklch(45% 0.12 250); } /* builtins (__MODULE__) - blue */
-.makeup .ss { color: oklch(40% 0.15 145); } /* atoms/symbols - green */
-.makeup .s,
-.makeup .s1,
-.makeup .s2 { color: oklch(40% 0.15 145); } /* strings - green */
-.makeup .c,
-.makeup .c1,
-.makeup .cm { color: oklch(55% 0.02 250); font-style: italic; } /* comments - gray */
-.makeup .n { color: oklch(30% 0.02 250); } /* names - dark gray */
-.makeup .o { color: oklch(40% 0.1 30); } /* operators - dark orange */
-.makeup .p { color: oklch(40% 0.02 250); } /* punctuation - dark gray */
-.makeup .mi,
-.makeup .mf { color: oklch(45% 0.18 290); } /* numbers - purple */
-.makeup .w { } /* whitespace - inherit */
-
-/* Makeup syntax highlighting - Dark theme */
-[data-theme="dark"] .makeup .k,
-[data-theme="dark"] .makeup .kd,
-[data-theme="dark"] .makeup .kn,
-[data-theme="dark"] .makeup .kp { color: oklch(70% 0.2 50); font-weight: 500; }
-[data-theme="dark"] .makeup .nc { color: oklch(75% 0.15 290); }
-[data-theme="dark"] .makeup .nf { color: oklch(75% 0.12 250); }
-[data-theme="dark"] .makeup .na { color: oklch(70% 0.15 290); }
-[data-theme="dark"] .makeup .no { color: oklch(70% 0.2 50); }
-[data-theme="dark"] .makeup .bp { color: oklch(75% 0.12 250); }
-[data-theme="dark"] .makeup .ss { color: oklch(70% 0.15 145); }
-[data-theme="dark"] .makeup .s,
-[data-theme="dark"] .makeup .s1,
-[data-theme="dark"] .makeup .s2 { color: oklch(70% 0.15 145); }
-[data-theme="dark"] .makeup .c,
-[data-theme="dark"] .makeup .c1,
-[data-theme="dark"] .makeup .cm { color: oklch(55% 0.02 250); font-style: italic; }
-[data-theme="dark"] .makeup .n { color: oklch(80% 0.02 250); }
-[data-theme="dark"] .makeup .o { color: oklch(75% 0.1 30); }
-[data-theme="dark"] .makeup .p { color: oklch(70% 0.02 250); }
-[data-theme="dark"] .makeup .mi,
-[data-theme="dark"] .makeup .mf { color: oklch(75% 0.18 290); }
+/* Highlight.js Dracula theme */
+.hljs {
+  color: #f8f8f2;
+}
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion { color: #6272a4; font-style: italic; }
+.hljs-keyword,
+.hljs-selector-tag { color: #ff79c6; font-weight: bold; }
+.hljs-built_in,
+.hljs-section,
+.hljs-link { color: #8be9fd; }
+.hljs-title,
+.hljs-attr,
+.hljs-meta-keyword { color: #50fa7b; font-style: italic; }
+.hljs-string,
+.hljs-meta,
+.hljs-name,
+.hljs-type,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-tag,
+.hljs-template-variable { color: #f1fa8c; }
+.hljs-number,
+.hljs-literal { color: #bd93f9; }
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo { color: #8be9fd; }
+.hljs-doctag { color: #ff79c6; font-weight: bold; }
+.hljs-attribute { color: #50fa7b; }
+.hljs-regexp { color: #f1fa8c; }
+.hljs-subst { color: #f8f8f2; }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: bold; }
+.hljs-tag { color: #ff79c6; }
+.hljs-tag .hljs-name { color: #ff79c6; }
+.hljs-tag .hljs-attr { color: #50fa7b; }

@@ -5,7 +5,7 @@ defmodule SkaleckiDev.Blog do
     build: Post,
     from: Application.app_dir(:skalecki_dev, "priv/posts/**/*.md"),
     as: :posts,
-    highlighters: [:makeup_elixir, :makeup_erlang]
+    highlighters: []
 
   @posts Enum.sort_by(@posts, & &1.date, {:desc, Date})
 
