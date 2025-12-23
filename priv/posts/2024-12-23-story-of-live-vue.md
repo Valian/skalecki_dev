@@ -1,7 +1,8 @@
 %{
   title: "LiveVue 1.0: 19 Months of Making Phoenix and Vue Best Friends",
   description: "The story behind LiveVue — why I built it, how it works under the hood, and the performance rabbit holes I fell into along the way.",
-  tags: ["elixir", "phoenix", "vue", "live_vue", "open-source"]
+  tags: ["elixir", "phoenix", "vue", "live_vue", "open-source"],
+  hidden: true
 }
 ---
 
