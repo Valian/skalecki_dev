@@ -9,11 +9,11 @@ I'm extremely happy to announce that LiveVue hit 1.0 today! I've built a dedicat
 
 ![LiveVue 1.0](/images/live_vue_screenshot.png)
 
-LiveVue is a library that allows you to seamlessly mix Phoenix LiveView and Vue.js. This post explains why this library exists and describes decisions made along the way and technical challenges I've had to overcome to reach 1.0. The first public commit happened on May 8, 2024. Looking back, it's quite a long time ago.
+LiveVue is a library that allows you to seamlessly mix Phoenix LiveView and Vue.js. This post explains why this library exists, describes decisions made along the way and technical challenges I've had to overcome to reach 1.0. The first public commit happened on May 8, 2024. Looking back, it's quite a long time ago.
 
 ## The Problem
 
-It was 2024 — Phoenix 1.7. I'd recently left the Python world for Elixir and was building an app with Phoenix LiveView. My app had dynamic forms with conditional sections, client-side interactions that didn't need server round-trips, and I wanted lightweight per-component state — similar to what I was used to with Vue or React.
+It was 2024 — Phoenix 1.7. I'd recently left the Python world for Elixir and was building an app with Phoenix LiveView. My app had dynamic forms with conditional sections and client-side interactions that didn't need server round-trips. My past experience with Vue and React spoiled me with a lightweight per-component state, and I was looking for a similar experience in Phoenix.
 
 LiveView's tools didn't quite fit: hooks were time-consuming to write, JS commands felt brittle, and Live Components felt heavy for simple UI state. I couldn't find a good option for declarative client-side rendering in Phoenix.
 
@@ -131,18 +131,13 @@ LiveView has change-tracking. The `assigns.__changed__` map tells you which assi
 {slots, slots_changed?} = extract(assigns, :slots)
 {handlers, handlers_changed?} = extract(assigns, :handlers)
 
-computed_changed =
-  %{
-    props: props_changed?,
-    slots: slots_changed?,
-    handlers: handlers_changed?,
-    ssr_render: render_ssr?
-  }
+changed = assigns.__changed__
+|> Map.put(:props, props_changed?)
+|> Map.put(:slots, slots_changed?)
+|> Map.put(:handlers, handlers_changed?)
+|> Map.put(:ssr_render, render_ssr?)
 
-assigns =
-  update_in(assigns.__changed__, fn
-    changed -> for {k, true} <- computed_changed, into: changed, do: {k, true}
-  end)
+assigns = Map.put(assigns, :__changed__, changed)
 ```
 
 After that change, LiveView was sending only changed attributes. It was a nice improvement, but I still wasn't there — changing even a single prop meant sending the entire props object. I wanted to diff it as well!
@@ -157,7 +152,7 @@ With before-and-after states, I could use [JSON Patch (RFC 6902)](https://datatr
 
 However, there was a problem: previously, I was simply dumping props into JSON, but with diffs, I couldn't do this — it's impossible to generate a patch from a JSON string — I would need to decode it first. Instead I've opted to implement a custom `LiveVue.Encoder` protocol to turn structs into plain maps and lists.
 
-I could then construct diffs. It works by comparing the previous and new value and generating a list of operations to transform the previous value into the new one, such as:
+This finally allowed me to send only the changes to the client. It works by comparing the previous and new value and generating a list of operations to transform the previous value into the new one, such as:
 
 ```json
 [
@@ -167,7 +162,9 @@ I could then construct diffs. It works by comparing the previous and new value a
 ]
 ```
 
-As a last step, I've implemented a custom `updated` hook that applied that diff to the props. In some cases, payload sizes dropped by 90% or more! ❤️ In the meantime I've implemented [a number of PRs](https://github.com/corka149/jsonpatch/issues?q=state%3Aclosed%20is%3Apr%20author%3A%40me) to the jsonpatch library to support my case efficiently — encoding is now lazy, occurring only if a given value was changed.
+As a last step, I've implemented a custom `updated` hook that applied that diff to the props. In some cases, payload sizes dropped by 90% or more! ❤️
+
+During the process of integrating diffs into LiveVue, I've implemented [a number of PRs](https://github.com/corka149/jsonpatch/issues?q=state%3Aclosed%20is%3Apr%20author%3AValian) to the jsonpatch library. Encoding is now lazy, occurring only if a given value was changed, and up to 15x faster than before.
 
 <!-- TODO: Insert benchee comparison -->
 
@@ -308,7 +305,7 @@ Behind the scenes, LiveVue serializes form errors and values into JSON. Relation
 
 I think `useLiveForm` is a good abstraction because it doesn't enforce any specific UI patterns. It's up to the developer how to render the form, errors, what the logic to allow submission is, etc. LiveVue only gives you the data and the API to work with that data, handling all the complexity of asynchronous validation. See it in action [here](https://livevue.skalecki.dev/examples/simple-form?tab=preview).
 
-Even better, it's fully typed with TypeScript! For example, if you type `form.field('skills[0].name')`, your IDE is able to verify whether the field path exists and warn you if you make a typo. The [implementation](https://github.com/Valian/live_vue/blob/main/assets/useLiveForm.ts#L60) is the craziest TypeScript I've ever written, but from the outside it's fairly simple.
+Even better, it's fully typed with TypeScript! For example, if you type `form.field('skills[0].name')`, your IDE is able to verify whether the field path exists and warn you if you make a typo. The [implementation](https://github.com/Valian/live_vue/blob/0c05cfdd907d6a954b6b95ee3d6da9674a86ce5b/assets/useLiveForm.ts#L60) is the craziest TypeScript I've ever written, but from the outside it's fairly simple.
 
 ## Two Ways to Use LiveVue
 
@@ -329,8 +326,6 @@ This approach makes colocating Vue with LiveViews a natural thing to do.
 I use option 2 in my app [Postline.ai](https://postline.ai). It solves a real problem: if you mix HEEx and Vue too much, you end up duplicating components. Your buttons, inputs, and cards exist in both worlds. That doesn't scale.
 
 The all-in approach is similar to [Inertia.js](https://inertiajs.com/), but you keep LiveView's WebSocket and real-time capabilities. I think it's a perfect fit for Phoenix.
-
-<!-- TODO: Insert diagram from slides -->
 
 ## Developer Experience
 
@@ -366,7 +361,7 @@ I love being part of the Elixir community and wanted to give something back. Sin
 
 ## What's Next
 
-- Backporting features to LiveSvelte and LiveReact.
+- Backporting features to LiveSvelte and LiveReact (if maintainers are interested)
 - VS Code extension improvements.
 - More examples and integrations.
 
@@ -385,7 +380,7 @@ Or add to an existing project:
 mix igniter.install live_vue
 ```
 
-Merry Christmas and Happy New Year! 🎉
+Happy New Year for everyone! 🎉
 
 ---
 
